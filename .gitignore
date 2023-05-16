@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 #larger & unused data files
-data_original/
+data/meta_content.csv
