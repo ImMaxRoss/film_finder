@@ -159,5 +159,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-#large data files
-data/
+#larger & unused data files
+data/reviews.csv
+data/Movies_and_TV.json.gz
+data/meta_Movies_and_TV.json.gz
+data/Movies_and_TV_5.json.gz
+data/Movies_and_TV.csv
+data/subset_reviews.csv
