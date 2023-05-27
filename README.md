@@ -60,6 +60,8 @@ Uncompress JSON files and convert them using Pandas. Perform data cleaning using
 ### EDA - Part 1: Metadata
 **Remove unused features**: Discard unnecessary features for collaborative and content-based filtering, focusing on null or redundant information.
 
+**Remove unused main_cat**: Discard all main categories not labeled as 'Movies & TV'.
+
 **Extract genres**: Parse category to acquire specific genres/subgenres for movies/TV shows.
 
 **Extract leading roles**: Analyze brand to obtain leading roles in films.
@@ -161,15 +163,6 @@ The recommendation systems in this project attempt to address user challenges in
 ├── code
 │  ├── __init__.py
 │  └── viz.py
-├── data
-│  └── data_ff.7z
-│     ├──collab_merged_df.csv
-│     ├──collab_meta.csv
-│     ├──collab_model_revs.csv
-│     ├──desc_all_genre.csv
-│     ├──desc_filtered_genre.csv
-│     ├──reviews.csv
-│     └──reviews_meta.csv
 ├── img
 │  ├── cloud.png
 │  ├── collab-rec.png
@@ -200,13 +193,3 @@ The recommendation systems in this project attempt to address user challenges in
 └── film_finder.pdf
 ```
 <!-- #endregion -->
-
-```python
-collab_model_revs.csv
-collab_meta.csv
-collab_model_revs.csv
-desc_all_genre.csv
-desc_filtered_genre.csv
-reviews.csv
-reviews_meta.csv
-```
