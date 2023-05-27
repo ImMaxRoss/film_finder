@@ -130,11 +130,83 @@ The system performs well, suggesting new movies based on genre and word vector s
 
 # Conclusions
 
+The recommendation systems in this project attempt to address user challenges in discovering new content and aims to mitigate biases in existing platform algorithms. The collaboration of these techniques seeks to improve recommendation reliability, personalization, and effectiveness.
+
+**Collaborative Filtering**: The final SVDpp model, having been trained, exhibited an RMSE score of 0.908. This model attempts to predict user ratings and provide personalized recommendations based on shared preferences.Though an RMSE score of .908 is not terrible I think that further feature engineering could improve the error in our model.
+
+**Content-Based Filtering**: With the use of cleaned datasets and thorough text preprocessing, the content-based system offers recommendations by evaluating genre and word vector similarities. It demonstrates a tendency towards movies of the same genre, suggesting room for refinement in broader categories.
 
 
 # Next Steps
  - Create and launch an app using the recommendation systems
- - Use the descriptions and reviewText features to classify missing or ambiguous genres
+ - Use the description text and/or reviewText to classify missing or incorrect genres
  - Compare the effectiveness of vectorizing reviewText data vs description text data and possibly utilize both with feature engineering.
  - Combine the two systems to create a hybrid model
 <!-- #endregion -->
+
+## Contact Information
+
+| Data Scientist | Github | email|
+| ---: | --- | --- |
+| Max | [https://github.com/ImMaxRoss](https://github.com/ImMaxRoss) | [max@maxross.com](max@maxross.com) |
+
+
+![thank_you_pic](./img/thankyou.png)
+
+<!-- #region -->
+## Repo Structure
+
+```bash
+.
+├── code
+│  ├── __init__.py
+│  └── viz.py
+├── data
+│  └── data_ff.7z
+│     ├──collab_merged_df.csv
+│     ├──collab_meta.csv
+│     ├──collab_model_revs.csv
+│     ├──desc_all_genre.csv
+│     ├──desc_filtered_genre.csv
+│     ├──reviews.csv
+│     └──reviews_meta.csv
+├── img
+│  ├── cloud.png
+│  ├── collab-rec.png
+│  ├── cosine.png
+│  ├── freqplot.png
+│  ├── knn.png
+│  ├── thankyou.png
+│  └── title_page.png
+├── Jupyter_Notebooks
+│  ├── column_info.ipynb
+│  ├── content_model_preprocess_pt1.ipynb
+│  ├── content_model_preprocess_pt2_descriptions.ipynb
+│  ├── content_model_preprocess_pt2_reviews.ipynb
+│  ├── eda_collab_pt1_amaz.ipynb
+│  ├── eda_collab_pt1_prime.ipynb
+│  ├── eda_collab_pt2.ipynb
+│  ├── eda_content_pt1.ipynb
+│  ├── eda_content_pt2.ipynb
+│  ├── eda_content_pt3_all.ipynb
+│  ├── eda_content_pt3_prime.ipynb
+│  ├── json_to_csv.ipynb
+│  └── tensor_flow_model.ipynb.ipynb
+├── LICENSE
+├── README.md
+├── collaborative_filtering.ipynb
+├── content_based_filtering.ipynb
+├── data_preparation.ipynb
+└── film_finder.pdf
+```
+<!-- #endregion -->
+
+```python
+collab_model_revs.csv
+collab_meta.csv
+collab_model_revs.csv
+desc_all_genre.csv
+desc_filtered_genre.csv
+reviews.csv
+reviews_meta.csv
+```
