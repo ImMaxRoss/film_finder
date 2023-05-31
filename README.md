@@ -54,8 +54,17 @@ The dataset offers user reviews and metadata for various films and TV shows, all
 ### Initial Dataset Access
 Access review and metadata files, which are stored as compressed JSON files with separate entries on each line. For larger files like 'Movies and TV' reviews and metadata, fill out a Google Form provided by their respective links.
 
+![data_source](./img/data_source.png)
+![data_survey](./img/data_survey.png)
+
 ### Data Conversion
-Uncompress JSON files and convert them using Pandas. Perform data cleaning using Pandas, Numpy, and Python's ast module[(Abstract Syntax Trees)](https://docs.python.org/3/library/ast.html)
+Uncompress JSON files and convert them using Pandas. 
+
+![conversion](./img/json_convert.png)
+
+### Data Cleaning
+Perform data cleaning using Pandas, Numpy, and Python's ast module[(Abstract Syntax Trees)](https://docs.python.org/3/library/ast.html)
+
 
 ### EDA - Part 1: Metadata
 **Remove unused features**: Discard unnecessary features for collaborative and content-based filtering, focusing on null or redundant information.
@@ -99,7 +108,16 @@ Collaborative filtering hinges on the comparison of user profiles to pinpoint sh
 By sorting predicted user ratings for unseen movies in descending order, the function presents the top N movie details, like titles and ratings, factoring in user tastes and similarities with others.
 
 ### Performance & Evaluation:
-The collaborative filtering model yields accurate and personalized recommendations, considering users' shared preferences and movie ratings. Boasting an RMSE score of 0.908, the model manages to predict user ratings effectively, which in turn enhances user experience and satisfaction.
+The evaluation of our initial model, SVD_first, showcased a slight improvement over the benchmark score:
+
+**SVD_first RMSE**: 0.9106
+**Benchmark RMSE**: 0.9352
+
+To improve performance I'd like to do the following:
+- Engage in further feature engineering for deeper insights and potential performance enhancement.
+- Allocate additional resources to hyperparameter tuning for better-performing models and precise recommendations.
+- Refine content-based filtering, as some suggestions had "Unknown" genres; tap into descriptive data for improvement.
+By addressing these issues, the overall performance of the collaborative filtered recommendations should improve.
 
 ![collab_recommender](./img/collab-rec.png)
 
@@ -127,23 +145,31 @@ wordcloud prior to preprocessing:
 Both return the top 5 recommendations for a movie. The first calculates the cosine similarity matrix directly, while the second utilizes a k-nearest neighbors model.
 
 ### Performance & Evaluation:
-The system performs well, suggesting new movies based on genre and word vector similarities. However, it leans towards movies of the same genre, working well for specific genres like 'Faith & Spirituality', but offering dissimilar recommendations for broader genres like 'Science Fiction & Fantasy'.
+
+**Preprocessing Evaluation**: Enhancing preprocessing for the 'description' column may better recognize genre-specific language. Also, concentrating solely on streaming content could reduce biases arising from physical format descriptions.
+
+**Function Recommendations Evaluation**: Similarity functions exhibit encouraging outcomes, especially for genres such as 'Anime' and 'Faith & Spirituality'. However, we can refine them to better address wider genres like 'Comedy'. Concise and focused explanations are vital.
 
 
 # Conclusions
+Although significant strides have been made in its development, further improvements are necessary to achieve our goal of creating an unbiased and personalized user experience.
 
-The recommendation systems in this project attempt to address user challenges in discovering new content and aims to mitigate biases in existing platform algorithms. The collaboration of these techniques seeks to improve recommendation reliability, personalization, and effectiveness.
+### Key Points:
 
-**Collaborative Filtering**: The final SVDpp model, having been trained, exhibited an RMSE score of 0.908. This model attempts to predict user ratings and provide personalized recommendations based on shared preferences.Though an RMSE score of .908 is not terrible I think that further feature engineering could improve the error in our model.
+**Collaborative Filtering**: We've successfully built a collaborative filtering model using SVDpp that demonstrates satisfactory predictions with a 0.908 RMSE. We can recommend content to users based on common movie preferences, although improvements can be made through feature engineering and hyperparameter tuning.
 
-**Content-Based Filtering**: With the use of cleaned datasets and thorough text preprocessing, the content-based system offers recommendations by evaluating genre and word vector similarities. It demonstrates a tendency towards movies of the same genre, suggesting room for refinement in broader categories.
+**Content-Based Filtering**: Using preprocessed descriptions and genres, our content-based filtering model leverages TfidfVectorizer and NearestNeighbors for recommendations. The system effectively recommends content based on genres, although further preprocessing and refining similarity measures can lead to better results.
+
+**Data Limitations & Cleaning**: The Amazon Review dataset required extensive cleaning and processing, which might have impacted recommendation accuracy. Better addressing of these limitations, such as ambiguous genre labels or missing descriptions, could improve the system's efficacy.
+
+Overall, film_finder offers a promising foundation for delivering personalized recommendations to users, with potential to evolve into a robust and unbiased system suited for streaming platforms.
 
 
 # Next Steps
- - Create and launch an app using the recommendation systems
- - Use the description text and/or reviewText to classify missing or incorrect genres
- - Compare the effectiveness of vectorizing reviewText data vs description text data and possibly utilize both with feature engineering.
- - Combine the two systems to create a hybrid model
+ - Compare User Reviews vs Movie Descriptions for features of content based system, using one over the other or both.
+ - Further Filtering of Genres using Classification Model based on re-ingineered content based features
+ - Combine the Collaborative and Content based system to create a hybrid model. (Filtering by Collaborative first and then Content Based Filtering)
+ - Host an app using the hybrid recommendation system
 <!-- #endregion -->
 
 ## Contact Information
@@ -161,30 +187,8 @@ The recommendation systems in this project attempt to address user challenges in
 ```bash
 .
 ├── code
-│  ├── __init__.py
-│  └── viz.py
 ├── img
-│  ├── cloud.png
-│  ├── collab-rec.png
-│  ├── cosine.png
-│  ├── freqplot.png
-│  ├── knn.png
-│  ├── thankyou.png
-│  └── title_page.png
 ├── Jupyter_Notebooks
-│  ├── column_info.ipynb
-│  ├── content_model_preprocess_pt1.ipynb
-│  ├── content_model_preprocess_pt2_descriptions.ipynb
-│  ├── content_model_preprocess_pt2_reviews.ipynb
-│  ├── eda_collab_pt1_amaz.ipynb
-│  ├── eda_collab_pt1_prime.ipynb
-│  ├── eda_collab_pt2.ipynb
-│  ├── eda_content_pt1.ipynb
-│  ├── eda_content_pt2.ipynb
-│  ├── eda_content_pt3_all.ipynb
-│  ├── eda_content_pt3_prime.ipynb
-│  ├── json_to_csv.ipynb
-│  └── tensor_flow_model.ipynb.ipynb
 ├── LICENSE
 ├── README.md
 ├── collaborative_filtering.ipynb
