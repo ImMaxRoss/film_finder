@@ -3,7 +3,7 @@
 
 <!-- #region -->
 # Project Overview
-The main goal for this project is to Develop a hybrid movie/TV recommendation system that combines collaborative filtering and content-based filtering to suggest new content to users. Currently, these techniques are applied independently. Our project aims to harness their combined potential.
+The main goal for this project is to Develop a movie/TV recommendation system using two different approaches. Collaborative filtering and content-based filtering to suggest new content to users.
 
 **Collaborative Filtering**: Analyzes existing user profiles to discover shared preferences and recommend new content based on similarities.
 
@@ -13,8 +13,7 @@ The main goal for this project is to Develop a hybrid movie/TV recommendation sy
 # Business Understanding
 As streaming platforms pile-up content, users struggle to pinpoint films or shows that align with their tastes. The dubious presence of bias in platform algorithms exacerbates this challenge, making it harder for users to rely on platform recommendations. Biases emerge from factors like skewed user preferences, popularity bias, or even the platform's promotional agenda. As a result, recommended content may not cater to users' unique tastes, negatively affecting the overall user experience.
 
-Streaming platforms stand to gain from implementing an unbiased hybrid recommendation system that blends content-based and collaborative filtering techniques. This approach leverages the best of both methods, increasing reliability and personalization while mitigating biases. The content-based technique analyzes features like genre and content description, while collaborative filtering harnesses the collective trends of user ratings. Together, they forge a powerful recommendation engine, enhancing user satisfaction and overall experience.
-
+Streaming platforms stand to gain from implementing an unbiased recommendation system that utilizes either a content-based or collaborative filtering approach. The content-based technique analyzes features like genre and content description, while collaborative filtering harnesses the collective trends of user ratings. They are both powerful recommendation engines.
 
 
 # Data Understanding
@@ -94,7 +93,7 @@ Perform data cleaning using Pandas, Numpy, and Python's ast module[(Abstract Syn
 
 # Modeling
 
-## Collaborative Filtering
+# Collaborative Filtering
 
 Collaborative filtering hinges on the comparison of user profiles to pinpoint shared movie preferences, focusing on ratings assigned by users. The following outlines the procedure:
 
@@ -106,27 +105,33 @@ Collaborative filtering hinges on the comparison of user profiles to pinpoint sh
 **recommend_movies()**: Function that offers content recommendations to existing users based on the trained SVDpp collaborative filtering model. Accepts user ID, model, DataFrame (akin to movie and TV meta DataFrame), and optional N parameter (default 10) for suggesting N movies.
 
 By sorting predicted user ratings for unseen movies in descending order, the function presents the top N movie details, like titles and ratings, factoring in user tastes and similarities with others.
-
-### Performance & Evaluation:
-The evaluation of our initial model, SVD_first, showcased a slight improvement over the benchmark score:
-
-**SVD_first RMSE**: 0.9106
-**Benchmark RMSE**: 0.9352
-
-To improve performance I'd like to do the following:
-- Engage in further feature engineering for deeper insights and potential performance enhancement.
-- Allocate additional resources to hyperparameter tuning for better-performing models and precise recommendations.
-- Refine content-based filtering, as some suggestions had "Unknown" genres; tap into descriptive data for improvement.
-By addressing these issues, the overall performance of the collaborative filtered recommendations should improve.
-
-![collab_recommender](./img/collab-rec.png)
+Example Recommendation: ![collab_recommender](./img/collab_rec1.png)
 
 
-## Content Based Filtering
+## Performance & Evaluation:
+
+During the analysis of the collaborative filtering recommendation system, we found that recommendations for users with limited high-rated Comedy TV Shows didn't align well with their preferences.
+![collab_recommender](./img/collab_rec2.png)
+
+### Possible Causes
+- **Vast dataset**: The large and diverse dataset may cause users with a small set of highly-rated videos to correlate strongly with users who reviewed varied movies but rated the same shows highly.
+- **Similarity metric**: The current system treats varied-preference users as similar, resulting in inaccurate recommendations.
+
+### Recommended Actions
+- **Increase minimum reviews**: Filter users with more than the current minimum number of reviews (4) for better comparisons.
+- **Customize similarity metric**: Implement a weighted similarity metric considering overlapping movies and users' genre importance.
+
+These steps could potentially enhance the recommendation system's effectiveness, providing more relevant recommendations for each user profile.
+
+
+##### future steps sidenote: Since the dataset is so large, it may make more sense to use the BaselineOnly model if not able to increase the difference in the hyperparameter tuned final model in order to save computation.
+
+
+# Content Based Filtering
 The content-based filtering recommendation system utilizes a cleaned dataset with 67,935 movies and TV shows, spanning 24 genres with accurate summaries. The following steps outline its creation:
 
 wordcloud prior to preprocessing:
-![wordcloud](./img/cloud.png)
+![wordclo](./img/cloud.png)
 
 - Preprocessed 'description' using techniques such as removing stopwords, employing regexTokenizer, and applying WordNetLemmatizer from the NLTK module.
 - Used a custom WordNet function, curtosy of The Flatiron School,d to translate NLTK POS tags to WordNet tags.
@@ -137,37 +142,28 @@ wordcloud prior to preprocessing:
 ### Similarity Algorithm Functions:
 
 **cos_recs_genre()**: Calculates similarity scores between movies using cosine_similarity() from sklearn, leveraging TF-IDF features.
-![cosine](./img/cosine.png)
 
 **knn_recs_genre()**: Employs NearestNeighbors model from sklearn with 'cosine' metric, conducting k-nearest neighbors search based on cosine similarity.
-![knn](./img/knn.png)
+
+![content_based_algos](./img/content_based.png)
 
 Both return the top 5 recommendations for a movie. The first calculates the cosine similarity matrix directly, while the second utilizes a k-nearest neighbors model.
 
-### Performance & Evaluation:
+## Performance & Evaluation:
 
-**Preprocessing Evaluation**: Enhancing preprocessing for the 'description' column may better recognize genre-specific language. Also, concentrating solely on streaming content could reduce biases arising from physical format descriptions.
-
-**Function Recommendations Evaluation**: Similarity functions exhibit encouraging outcomes, especially for genres such as 'Anime' and 'Faith & Spirituality'. However, we can refine them to better address wider genres like 'Comedy'. Concise and focused explanations are vital.
+After the evaluation and analysis of the content-based filtering system for recommending similar movies, it was suggested to preprocess the description features for better specificity of the vectorized dataset. To increase the effectiveness of content modeling, NLP could be utilized for sub-genre classification instead of manual filtering. Analyzing purely streaming video content could also provide more insight for the system. The system performed well in recommending content of the same genre, but it lacked accuracy in capturing minute differences in specific sub-genres. Thus, resulting in less relevant recommendations for broader genres in the dataset. Exploring ways to improve the specificity and accuracy of the system is recommended for better recommendations.
 
 
-# Conclusions
-Although significant strides have been made in its development, further improvements are necessary to achieve our goal of creating an unbiased and personalized user experience.
+# Conclusions:
 
-### Key Points:
+Through the analysis of the collaborative and content-based filtering systems, we have developed two robust recommendation engines for movies and TV shows. The system utilizes a vast dataset of over 8 million reviews and 200,000 metadata movies and TV shows. The collaborative filtering system provides personalized recommendations based on similar user preferences, while the content-based filtering system recommends similar movies based on extracted features such as genre and description.
 
-**Collaborative Filtering**: We've successfully built a collaborative filtering model using SVDpp that demonstrates satisfactory predictions with a 0.908 RMSE. We can recommend content to users based on common movie preferences, although improvements can be made through feature engineering and hyperparameter tuning.
-
-**Content-Based Filtering**: Using preprocessed descriptions and genres, our content-based filtering model leverages TfidfVectorizer and NearestNeighbors for recommendations. The system effectively recommends content based on genres, although further preprocessing and refining similarity measures can lead to better results.
-
-**Data Limitations & Cleaning**: The Amazon Review dataset required extensive cleaning and processing, which might have impacted recommendation accuracy. Better addressing of these limitations, such as ambiguous genre labels or missing descriptions, could improve the system's efficacy.
-
-Overall, film_finder offers a promising foundation for delivering personalized recommendations to users, with potential to evolve into a robust and unbiased system suited for streaming platforms.
+The collaborative filtering approach is a great starting point for recommending videos and can be used to enhance the user experience on streaming platforms. The content-based filtering approach provides accurate results for recommending similar movies within the same genre, but it struggles recommend relavant content when the genre is more broad.
 
 
 # Next Steps
- - Compare User Reviews vs Movie Descriptions for features of content based system, using one over the other or both.
- - Further Filtering of Genres using Classification Model based on re-ingineered content based features
+ - Compare User Reviews vs Movie Descriptions for features of the content based system, using one over the other or both.
+ - Further Filtering of Genres using NLP and a Classification Model based on re-ingineered content based features
  - Combine the Collaborative and Content based system to create a hybrid model. (Filtering by Collaborative first and then Content Based Filtering)
  - Host an app using the hybrid recommendation system
 <!-- #endregion -->
